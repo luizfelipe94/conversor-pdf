@@ -6,6 +6,7 @@ RUN apt-get install nodejs -y
 RUN node -v
 RUN npm -v
 RUN apt-get install libreoffice-core --no-install-recommends -y
+RUN apt -y install libreoffice-base
 
 VOLUME /files_teste
 RUN echo 'FUNCIONAAAAAAAA' > /files_teste/xd.txt
