@@ -3,6 +3,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const uuid = require("uuid");
+const tmp = require("tmp");
+
+const convertedFilesDir = tmp.dirSync();
+console.log(`Created temp path ${convertedFilesDir.name}`);
 
 const controller = require("./src/converter");
 
@@ -20,7 +24,8 @@ app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     req.tid = uuid.v4();
-    console.log(req.tid);
+    console.log(`Transaction ${req.tid}`);
+    req.convertedFilesDir = convertedFilesDir.name;
     next();
 });
 
@@ -36,4 +41,11 @@ app.get("/api/version", controller.checkVersion);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+process.on("exit", () => {
+    if(process.env.REMOVE_TEMP_ON_EXIT === "true"){
+        console.log(`removing temp dir ${convertedFilesDir.name}`);
+        convertedFilesDir.removeCallback();
+    }
 });
