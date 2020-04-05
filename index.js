@@ -45,7 +45,7 @@ app.listen(PORT, () => {
 
 process.on("exit", () => {
     if(process.env.REMOVE_TEMP_ON_EXIT === "true"){
-        console.log(`removing temp dir ${convertedFilesDir.name}`);
+        console.log(`Removing temp dir ${convertedFilesDir.name}`);
         convertedFilesDir.removeCallback();
     }
 });

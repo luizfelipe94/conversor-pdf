@@ -19,16 +19,6 @@ const conveter = async (req, res) => {
         const regex = new RegExp("\/tmp\/tmp\-[0-9A-Za-z]+\/tmp-[0-9]\-[0-9]+\.pdf", "gm");
         const pathFileConverted = regex.exec(stdout)[0];
 
-        // return res.status(200)
-        // .json({
-        //     stdout,
-        //     stderr,
-        //     file,
-        //     cmd: cmd,
-        //     tmpDir: tmpDir,
-        //     fileConverted
-        // });
-
         return res.download(pathFileConverted);
         
     });
